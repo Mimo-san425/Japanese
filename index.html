@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>感謝の手紙を書こう</title>
 
+<!-- PDF用ライブラリ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
 body{
   font-family:"UD デジタル 教科書体 N-R","Hiragino Sans","Noto Sans JP",sans-serif;
@@ -40,9 +44,7 @@ textarea{min-height:90px}
   cursor:pointer;
 }
 
-ruby rt{
-  font-size:0.55em;
-}
+ruby rt{ font-size:0.55em; }
 
 button{
   padding:10px 14px;
@@ -51,12 +53,19 @@ button{
   border:1px solid #aaa;
   background:#f5f5f5;
   cursor:pointer;
+  margin-right:6px;
+}
+
+@media print{
+  button{display:none;}
+  body{background:#fff;}
+  .sheet{border:none;}
 }
 </style>
 </head>
 
 <body>
-<div class="sheet">
+<div class="sheet" id="printArea">
 
 <h1>
 <ruby>感謝<rt>かんしゃ</rt></ruby>の
@@ -66,39 +75,26 @@ button{
 
 <!-- ① -->
 <div class="step">
-<h2>
-①
-<ruby>誰<rt>だれ</rt></ruby>に
-<ruby>書<rt>か</rt></ruby>きますか（<ruby>記入<rt>きにゅう</rt></ruby>）
-</h2>
+<h2>① <ruby>誰<rt>だれ</rt></ruby>に<ruby>書<rt>か</rt></ruby>きますか</h2>
 <input type="text" id="to" placeholder="〇〇先生">
 </div>
 
 <!-- ② -->
 <div class="step">
-<h2>
-②
-<ruby>前文<rt>ぜんぶん</rt></ruby>を
-<ruby>選<rt>えら</rt></ruby>びましょう（1つ）
-</h2>
-
+<h2>② <ruby>前文<rt>ぜんぶん</rt></ruby>を<ruby>選<rt>えら</rt></ruby>びましょう（1つ）</h2>
 <div class="radio-group">
-<label>
-<input type="radio" name="greeting"
+<label><input type="radio" name="greeting"
 value="〇〇先生、いつもありがとうございます。">
 〇〇<ruby>先生<rt>せんせい</rt></ruby>、いつもありがとうございます。
 </label>
 
-<label>
-<input type="radio" name="greeting"
+<label><input type="radio" name="greeting"
 value="〇〇先生、毎日お世話になっています。">
 〇〇<ruby>先生<rt>せんせい</rt></ruby>、
-<ruby>毎日<rt>まいにち</rt></ruby>
-お<ruby>世話<rt>せわ</rt></ruby>になっています。
+<ruby>毎日<rt>まいにち</rt></ruby>お<ruby>世話<rt>せわ</rt></ruby>になっています。
 </label>
 
-<label>
-<input type="radio" name="greeting"
+<label><input type="radio" name="greeting"
 value="〇〇先生にお礼を伝えたくて、手紙を書きました。">
 〇〇<ruby>先生<rt>せんせい</rt></ruby>に
 お<ruby>礼<rt>れい</rt></ruby>を
@@ -111,55 +107,33 @@ value="〇〇先生にお礼を伝えたくて、手紙を書きました。">
 
 <!-- ③ -->
 <div class="step">
-<h2>
-③
-<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>を
-<ruby>書<rt>か</rt></ruby>きましょう（<ruby>記入<rt>きにゅう</rt></ruby>）
-</h2>
-<textarea id="memory"
-placeholder="（例）運動会の練習で声をかけてくれたこと"></textarea>
+<h2>③ <ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby></h2>
+<textarea id="memory"></textarea>
 </div>
 
 <!-- ④ -->
 <div class="step">
-<h2>
-④
-そのときの
-<ruby>気持<rt>きも</rt></ruby>ちを
-<ruby>書<rt>か</rt></ruby>きましょう（<ruby>記入<rt>きにゅう</rt></ruby>）
-</h2>
-<textarea id="feeling"
-placeholder="（例）うれしかった、安心した"></textarea>
+<h2>④ <ruby>気持<rt>きも</rt></ruby>ち</h2>
+<textarea id="feeling"></textarea>
 </div>
 
 <!-- ⑤ -->
 <div class="step">
-<h2>
-⑤
-<ruby>結<rt>むす</rt></ruby>びを
-<ruby>選<rt>えら</rt></ruby>びましょう（1つ）
-</h2>
-
+<h2>⑤ <ruby>結<rt>むす</rt></ruby>びを<ruby>選<rt>えら</rt></ruby>びましょう（1つ）</h2>
 <div class="radio-group">
-<label>
-<input type="radio" name="closing"
+<label><input type="radio" name="closing"
 value="これからもよろしくお願いします。">
 これからもよろしくお願いします。
 </label>
 
-<label>
-<input type="radio" name="closing"
+<label><input type="radio" name="closing"
 value="いつも見守ってくださり、ありがとうございます。">
-いつも
-<ruby>見守<rt>みまも</rt></ruby>ってくださり、
-ありがとうございます。
+いつも<ruby>見守<rt>みまも</rt></ruby>ってくださり、ありがとうございます。
 </label>
 
-<label>
-<input type="radio" name="closing"
+<label><input type="radio" name="closing"
 value="これからも〇〇先生に会えるのを楽しみにしています。">
-これからも
-〇〇<ruby>先生<rt>せんせい</rt></ruby>に
+これからも〇〇<ruby>先生<rt>せんせい</rt></ruby>に
 <ruby>会<rt>あ</rt></ruby>えるのを
 <ruby>楽<rt>たの</rt></ruby>しみにしています。
 </label>
@@ -168,11 +142,9 @@ value="これからも〇〇先生に会えるのを楽しみにしています�
 
 <!-- まとめ -->
 <div class="step">
-<h2>
-<ruby>手紙<rt>てがみ</rt></ruby>を
-まとめる
-</h2>
+<h2><ruby>手紙<rt>てがみ</rt></ruby>のまとめ</h2>
 <button onclick="build()">まとめる</button>
+<button onclick="savePDF()">PDFにする</button>
 <textarea id="result" readonly></textarea>
 </div>
 
@@ -180,9 +152,9 @@ value="これからも〇〇先生に会えるのを楽しみにしています�
 
 <script>
 function build(){
-  const to = document.getElementById("to").value;
-  const memory = document.getElementById("memory").value;
-  const feeling = document.getElementById("feeling").value;
+  const to = document.getElementById("to").value.trim();
+  const memory = document.getElementById("memory").value.trim();
+  const feeling = document.getElementById("feeling").value.trim();
 
   const g = document.querySelector('input[name="greeting"]:checked');
   const c = document.querySelector('input[name="closing"]:checked');
@@ -195,6 +167,22 @@ function build(){
   if(c) text.push(c.value.replaceAll("〇〇先生", to));
 
   document.getElementById("result").value = text.join("\n\n");
+}
+
+async function savePDF(){
+  build(); // 念のため最新内容に
+  const area = document.getElementById("printArea");
+  const canvas = await html2canvas(area, {scale:2});
+  const imgData = canvas.toDataURL("image/png");
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p","mm","a4");
+
+  const pdfWidth = 210;
+  const pdfHeight = canvas.height * pdfWidth / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  pdf.save("感謝の手紙.pdf");
 }
 </script>
 
