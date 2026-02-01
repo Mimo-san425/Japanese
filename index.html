@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>感謝の手紙を書こう</title>
 
-<!-- PDF用ライブラリ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <style>
 body{
   font-family:"UD デジタル 教科書体 N-R","Hiragino Sans","Noto Sans JP",sans-serif;
@@ -38,6 +34,11 @@ textarea,input[type=text]{
 }
 textarea{min-height:90px}
 
+/* ★ まとめは特大 */
+#result{
+  min-height:300px;
+}
+
 .radio-group label{
   display:block;
   margin:6px 0;
@@ -56,6 +57,7 @@ button{
   margin-right:6px;
 }
 
+/* PDF用（印刷時） */
 @media print{
   button{display:none;}
   body{background:#fff;}
@@ -65,7 +67,7 @@ button{
 </head>
 
 <body>
-<div class="sheet" id="printArea">
+<div class="sheet">
 
 <h1>
 <ruby>感謝<rt>かんしゃ</rt></ruby>の
@@ -144,7 +146,7 @@ value="これからも〇〇先生に会えるのを楽しみにしています�
 <div class="step">
 <h2><ruby>手紙<rt>てがみ</rt></ruby>のまとめ</h2>
 <button onclick="build()">まとめる</button>
-<button onclick="savePDF()">PDFにする</button>
+<button onclick="window.print()">PDFにする</button>
 <textarea id="result" readonly></textarea>
 </div>
 
@@ -167,22 +169,6 @@ function build(){
   if(c) text.push(c.value.replaceAll("〇〇先生", to));
 
   document.getElementById("result").value = text.join("\n\n");
-}
-
-async function savePDF(){
-  build(); // 念のため最新内容に
-  const area = document.getElementById("printArea");
-  const canvas = await html2canvas(area, {scale:2});
-  const imgData = canvas.toDataURL("image/png");
-
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF("p","mm","a4");
-
-  const pdfWidth = 210;
-  const pdfHeight = canvas.height * pdfWidth / canvas.width;
-
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-  pdf.save("感謝の手紙.pdf");
 }
 </script>
 
