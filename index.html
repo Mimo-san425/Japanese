@@ -19,22 +19,25 @@ body{
   padding:20px;
 }
 h1{margin-top:0}
+
 .step{
   border:1px solid #ddd;
   border-radius:10px;
   padding:15px;
   margin-bottom:15px;
 }
+
 textarea,input[type=text]{
   width:100%;
   font-size:16px;
   padding:8px;
   border-radius:6px;
   border:1px solid #bbb;
+  box-sizing:border-box;
 }
 textarea{min-height:90px}
 
-/* ★ まとめは特大 */
+/* ★ まとめ欄は大きく */
 #result{
   min-height:300px;
 }
@@ -45,7 +48,9 @@ textarea{min-height:90px}
   cursor:pointer;
 }
 
-ruby rt{ font-size:0.55em; }
+ruby rt{
+  font-size:0.55em;
+}
 
 button{
   padding:10px 14px;
@@ -57,7 +62,7 @@ button{
   margin-right:6px;
 }
 
-/* PDF用（印刷時） */
+/* 印刷（PDF）用 */
 @media print{
   button{display:none;}
   body{background:#fff;}
@@ -75,28 +80,38 @@ button{
 <ruby>書<rt>か</rt></ruby>こう
 </h1>
 
-<!-- ① -->
+<!-- ① 記入 -->
 <div class="step">
-<h2>① <ruby>誰<rt>だれ</rt></ruby>に<ruby>書<rt>か</rt></ruby>きますか</h2>
+<h2>
+① <ruby>誰<rt>だれ</rt></ruby>に
+<ruby>書<rt>か</rt></ruby>きますか
+</h2>
 <input type="text" id="to" placeholder="〇〇先生">
 </div>
 
-<!-- ② -->
+<!-- ② 選択 -->
 <div class="step">
-<h2>② <ruby>前文<rt>ぜんぶん</rt></ruby>を<ruby>選<rt>えら</rt></ruby>びましょう（1つ）</h2>
+<h2>
+② <ruby>前文<rt>ぜんぶん</rt></ruby>を
+<ruby>選<rt>えら</rt></ruby>びましょう（1つ）
+</h2>
 <div class="radio-group">
-<label><input type="radio" name="greeting"
+<label>
+<input type="radio" name="greeting"
 value="〇〇先生、いつもありがとうございます。">
 〇〇<ruby>先生<rt>せんせい</rt></ruby>、いつもありがとうございます。
 </label>
 
-<label><input type="radio" name="greeting"
+<label>
+<input type="radio" name="greeting"
 value="〇〇先生、毎日お世話になっています。">
 〇〇<ruby>先生<rt>せんせい</rt></ruby>、
-<ruby>毎日<rt>まいにち</rt></ruby>お<ruby>世話<rt>せわ</rt></ruby>になっています。
+<ruby>毎日<rt>まいにち</rt></ruby>
+お<ruby>世話<rt>せわ</rt></ruby>になっています。
 </label>
 
-<label><input type="radio" name="greeting"
+<label>
+<input type="radio" name="greeting"
 value="〇〇先生にお礼を伝えたくて、手紙を書きました。">
 〇〇<ruby>先生<rt>せんせい</rt></ruby>に
 お<ruby>礼<rt>れい</rt></ruby>を
@@ -107,35 +122,49 @@ value="〇〇先生にお礼を伝えたくて、手紙を書きました。">
 </div>
 </div>
 
-<!-- ③ -->
+<!-- ③ 記入 -->
 <div class="step">
-<h2>③ <ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby></h2>
+<h2>
+③ <ruby>思<rt>おも</rt></ruby>い
+<ruby>出<rt>で</rt></ruby>
+</h2>
 <textarea id="memory"></textarea>
 </div>
 
-<!-- ④ -->
+<!-- ④ 記入 -->
 <div class="step">
-<h2>④ <ruby>気持<rt>きも</rt></ruby>ち</h2>
+<h2>
+④ <ruby>気持<rt>きも</rt></ruby>ち
+</h2>
 <textarea id="feeling"></textarea>
 </div>
 
-<!-- ⑤ -->
+<!-- ⑤ 選択 -->
 <div class="step">
-<h2>⑤ <ruby>結<rt>むす</rt></ruby>びを<ruby>選<rt>えら</rt></ruby>びましょう（1つ）</h2>
+<h2>
+⑤ <ruby>結<rt>むす</rt></ruby>びを
+<ruby>選<rt>えら</rt></ruby>びましょう（1つ）
+</h2>
 <div class="radio-group">
-<label><input type="radio" name="closing"
+<label>
+<input type="radio" name="closing"
 value="これからもよろしくお願いします。">
 これからもよろしくお願いします。
 </label>
 
-<label><input type="radio" name="closing"
+<label>
+<input type="radio" name="closing"
 value="いつも見守ってくださり、ありがとうございます。">
-いつも<ruby>見守<rt>みまも</rt></ruby>ってくださり、ありがとうございます。
+いつも
+<ruby>見守<rt>みまも</rt></ruby>ってくださり、
+ありがとうございます。
 </label>
 
-<label><input type="radio" name="closing"
+<label>
+<input type="radio" name="closing"
 value="これからも〇〇先生に会えるのを楽しみにしています。">
-これからも〇〇<ruby>先生<rt>せんせい</rt></ruby>に
+これからも
+〇〇<ruby>先生<rt>せんせい</rt></ruby>に
 <ruby>会<rt>あ</rt></ruby>えるのを
 <ruby>楽<rt>たの</rt></ruby>しみにしています。
 </label>
@@ -144,9 +173,11 @@ value="これからも〇〇先生に会えるのを楽しみにしています�
 
 <!-- まとめ -->
 <div class="step">
-<h2><ruby>手紙<rt>てがみ</rt></ruby>のまとめ</h2>
+<h2>
+<ruby>手紙<rt>てがみ</rt></ruby>のまとめ
+</h2>
 <button onclick="build()">まとめる</button>
-<button onclick="window.print()">PDFにする</button>
+<button onclick="makePDF()">PDFにする</button>
 <textarea id="result" readonly></textarea>
 </div>
 
@@ -169,6 +200,12 @@ function build(){
   if(c) text.push(c.value.replaceAll("〇〇先生", to));
 
   document.getElementById("result").value = text.join("\n\n");
+}
+
+/* ★ PDF化ボタン */
+function makePDF(){
+  build();        // 必ず最新にまとめる
+  window.print();// 印刷 → PDF保存
 }
 </script>
 
