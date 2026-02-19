@@ -37,7 +37,14 @@ textarea,input[type=text]{
 }
 textarea{min-height:90px}
 
-/* ★ まとめ欄（縦書き） */
+/* 見本 */
+.example{
+  color:#888;
+  font-size:16px;
+  margin-bottom:6px;
+}
+
+/* まとめ（縦書き） */
 #result{
   min-height:400px;
   writing-mode: vertical-rl;
@@ -115,15 +122,17 @@ value="お礼を伝えたくて、手紙を書きました。">
 </div>
 </div>
 
-<!-- ③ -->
+<!-- ③ 思い出 -->
 <div class="step">
 <h2>③ <ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby></h2>
+<div class="example">〇〇のとき、〇〇が</div>
 <textarea id="memory"></textarea>
 </div>
 
-<!-- ④ -->
+<!-- ④ 気持ち -->
 <div class="step">
 <h2>④ <ruby>気持<rt>きも</rt></ruby>ち</h2>
+<div class="example">〇〇でした。〇〇です。</div>
 <textarea id="feeling"></textarea>
 </div>
 
@@ -173,11 +182,15 @@ function build(){
 
   let text = [];
 
-  if(to) text.push(to + "へ");   // ★ 最初に「〇〇先生へ」
+  if(to) text.push(to + "へ");
 
   if(g) text.push(g.value);
-  if(memory) text.push(memory);
-  if(feeling) text.push(feeling);
+
+  // ★ 思い出＋気持ちをくっつける
+  if(memory || feeling){
+    text.push(memory + feeling);
+  }
+
   if(c) text.push(c.value);
 
   document.getElementById("result").value = text.join("\n\n");
@@ -190,4 +203,4 @@ function makePDF(){
 </script>
 
 </body>
-</html>ー
+</html>
