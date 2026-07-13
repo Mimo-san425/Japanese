@@ -41,8 +41,21 @@ h2{
 
 label{
     display:block;
-    margin:10px 0;
-    font-size:1.3em;
+    margin:12px 0;
+    font-size:1.4em;
+}
+
+input[type="text"]{
+    font-size:1.6em;
+    padding:12px;
+    width:95%;
+    border:3px solid #0077cc;
+    border-radius:10px;
+}
+
+input[type="radio"]{
+    transform:scale(1.5);
+    margin-right:10px;
 }
 
 button{
@@ -58,13 +71,30 @@ button{
 }
 
 #result{
-    margin-top:20px;
-    padding:20px;
-    border:3px solid #0077cc;
-    border-radius:15px;
+    margin-top:30px;
+
+    width:400px;
+    height:650px;
+
+    padding:30px;
+
+    border:3px solid #333;
     background:#fffef0;
-    font-size:1.4em;
+
+    margin-left:auto;
+    margin-right:auto;
+
+    writing-mode:vertical-rl;
+    -webkit-writing-mode:vertical-rl;
+
+    text-orientation:upright;
+    word-break:break-all;
+
+    font-size:1.5em;
     line-height:2;
+
+    overflow:auto;
+    box-sizing:border-box;
 }
 </style>
 </head>
@@ -76,60 +106,56 @@ button{
 <h1>🎐 しょちゅうみまい を つくろう 🎐</h1>
 
 <div class="section">
-<h2>① だれに かく？</h2>
+<h2>① せんせい の なまえ</h2>
 
+<input
+type="text"
+id="teacherName"
+placeholder="せんせい の なまえ">
+</div>
 
-<label><input type="radio" name="who" value="たんにんのせんせいへ">
-たんにんのせんせい</label>
+<div class="section">
+<h2>② つたえたいこと を えらぼう</h2>
 
-<label><input type="radio" name="who" value="〇〇せんせいへ">
-〇〇せんせい</label>
+<label>
+<input type="radio" name="text" value="いつもありがとうございます。">
+いつもありがとうございます。
+</label>
 
+<label>
+<input type="radio" name="text" value="がっこうではおせわになっています。">
+がっこうではおせわになっています。
+</label>
+
+<label>
+<input type="radio" name="text" value="またおはなしできるのをたのしみにしています。">
+またおはなしできるのをたのしみにしています。
+</label>
+
+<label>
+<input type="radio" name="text" value="これからもよろしくおねがいします。">
+これからもよろしくおねがいします。
+</label>
 
 </div>
 
 <div class="section">
-<h2>② あいさつを えらぼう</h2>
+<h2>③ さいご の ことば を えらぼう</h2>
 
-<label><input type="radio" name="greet" value="しょちゅうおみまいもうしあげます。">
-しょちゅうおみまいもうしあげます。</label>
+<label>
+<input type="radio" name="end" value="おからだにきをつけてください。">
+おからだにきをつけてください。
+</label>
 
-<label><input type="radio" name="greet" value="おげんきですか。">
-おげんきですか。</label>
+<label>
+<input type="radio" name="end" value="おげんきでおすごしください。">
+おげんきでおすごしください。
+</label>
 
-<label><input type="radio" name="greet" value="そのご、おげんきですか。">
-そのご、おげんきですか。</label>
-
-</div>
-
-<div class="section">
-<h2>③ つたえたいことを えらぼう</h2>
-
-<label><input type="radio" name="text" value="いつもありがとうございます。">
-いつもありがとうございます。</label>
-
-<label><input type="radio" name="text" value="がっこうではおせわになっています。">
-がっこうではおせわになっています。</label>
-
-<label><input type="radio" name="text" value="またおはなしできるのをたのしみにしています。">
-またおはなしできるのをたのしみにしています。</label>
-
-<label><input type="radio" name="text" value="これからもよろしくおねがいします。">
-これからもよろしくおねがいします。</label>
-
-</div>
-
-<div class="section">
-<h2>④ さいごのことばを えらぼう</h2>
-
-<label><input type="radio" name="end" value="おからだにきをつけてください。">
-おからだにきをつけてください。</label>
-
-<label><input type="radio" name="end" value="おげんきでおすごしください。">
-おげんきでおすごしください。</label>
-
-<label><input type="radio" name="end" value="これからもよろしくおねがいします。">
-これからもよろしくおねがいします。</label>
+<label>
+<input type="radio" name="end" value="これからもよろしくおねがいします。">
+これからもよろしくおねがいします。
+</label>
 
 </div>
 
@@ -141,23 +167,27 @@ button{
 
 <script>
 function getValue(name){
-  const item = document.querySelector('input[name="'+name+'"]:checked');
-  return item ? item.value : '';
+    const item = document.querySelector(
+        'input[name="' + name + '"]:checked'
+    );
+    return item ? item.value : '';
 }
 
 function makeCard(){
 
-  const who = getValue('who');
-  const greet = getValue('greet');
-  const text = getValue('text');
-  const end = getValue('end');
+    const teacherName =
+        document.getElementById('teacherName').value || '〇〇先生';
 
-  document.getElementById('result').innerHTML =
-    '<strong>' + who + '</strong><br><br>' +
-    greet + '<br><br>' +
-    text + '<br><br>' +
-    end + '<br><br>' +
-    '〇〇 より';
+    const text = getValue('text');
+    const end = getValue('end');
+
+    document.getElementById('result').innerHTML = `
+        <div>${teacherName}へ</div>
+        <div>暑中お見舞い申し上げます。</div>
+        <div>${text}</div>
+        <div>${end}</div>
+        <div>〇〇より</div>
+    `;
 }
 </script>
 
