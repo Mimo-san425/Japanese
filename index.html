@@ -25,7 +25,6 @@ body{
 h1{
     text-align:center;
     color:#0077cc;
-    font-size:2em;
 }
 
 .section{
@@ -35,20 +34,16 @@ h1{
     border-radius:15px;
 }
 
-h2{
-    color:#0055aa;
-}
-
 label{
     display:block;
     margin:12px 0;
-    font-size:1.4em;
+    font-size:1.3em;
 }
 
 input[type="text"]{
-    font-size:1.6em;
-    padding:12px;
     width:95%;
+    font-size:1.5em;
+    padding:10px;
     border:3px solid #0077cc;
     border-radius:10px;
 }
@@ -61,40 +56,40 @@ input[type="radio"]{
 button{
     display:block;
     margin:25px auto;
-    font-size:1.5em;
+    font-size:1.4em;
     padding:12px 30px;
     background:#ff9900;
     color:white;
     border:none;
     border-radius:10px;
-    cursor:pointer;
 }
 
 #result{
-    margin-top:30px;
-
-    width:400px;
+    width:420px;
     height:650px;
-
-    padding:30px;
+    margin:30px auto;
 
     border:3px solid #333;
     background:#fffef0;
 
-    margin-left:auto;
-    margin-right:auto;
+    padding:30px;
+    box-sizing:border-box;
 
     writing-mode:vertical-rl;
     -webkit-writing-mode:vertical-rl;
-
     text-orientation:upright;
-    word-break:break-all;
 
     font-size:1.5em;
     line-height:2;
 
-    overflow:auto;
-    box-sizing:border-box;
+    position:relative;
+    overflow:hidden;
+}
+
+.from{
+    position:absolute;
+    left:20px;
+    bottom:20px;
 }
 </style>
 </head>
@@ -161,7 +156,13 @@ placeholder="せんせい の なまえ">
 
 <button onclick="makeCard()">かんせい</button>
 
-<div id="result"></div>
+<div id="result">
+<div>〇〇先生へ</div>
+<div>暑中お見舞い申し上げます。</div>
+<div>いつもありがとうございます。</div>
+<div>おからだにきをつけてください。</div>
+<div class="from">〇〇より</div>
+</div>
 
 </div>
 
@@ -178,15 +179,18 @@ function makeCard(){
     const teacherName =
         document.getElementById('teacherName').value || '〇〇先生';
 
-    const text = getValue('text');
-    const end = getValue('end');
+    const text =
+        getValue('text') || 'いつもありがとうございます。';
+
+    const end =
+        getValue('end') || 'おからだにきをつけてください。';
 
     document.getElementById('result').innerHTML = `
         <div>${teacherName}へ</div>
         <div>暑中お見舞い申し上げます。</div>
         <div>${text}</div>
         <div>${end}</div>
-        <div>〇〇より</div>
+        <div class="from">〇〇より</div>
     `;
 }
 </script>
