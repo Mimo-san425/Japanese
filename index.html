@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -10,6 +10,7 @@ body{
   font-family:"UD デジタル 教科書体 N-R","Hiragino Sans","Noto Sans JP",sans-serif;
   background:#fafafa;
 }
+
 .sheet{
   max-width:900px;
   margin:20px auto;
@@ -18,7 +19,10 @@ body{
   border-radius:12px;
   padding:20px;
 }
-h1{margin-top:0}
+
+h1{
+  margin-top:0;
+}
 
 .step{
   border:1px solid #ddd;
@@ -27,7 +31,8 @@ h1{margin-top:0}
   margin-bottom:15px;
 }
 
-textarea,input[type=text]{
+textarea,
+input[type=text]{
   width:100%;
   font-size:16px;
   padding:8px;
@@ -35,68 +40,87 @@ textarea,input[type=text]{
   border:1px solid #bbb;
   box-sizing:border-box;
 }
-textarea{min-height:90px}
 
-/* ★ まとめ欄は大きく */
-/* ★ まとめ欄（縦書き） */
+textarea{
+  min-height:90px;
+}
+
+/* まとめ欄（縦書き） */
 #result{
-  min-height:300px;
   min-height:400px;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
   line-height:2;
   font-size:20px;
   letter-spacing:4px;
 }
 
 .radio-group label{
-@@ -62,7 +67,6 @@
-  margin-right:6px;
+  display:inline-block;
+  margin:5px 12px 5px 0;
 }
 
-/* 印刷（PDF）用 */
 @media print{
-  button{display:none;}
-  body{background:#fff;}
-@@ -80,40 +84,29 @@
+  button{
+    display:none;
+  }
+
+  body{
+    background:#fff;
+  }
+
+  .sheet{
+    border:none;
+    margin:0;
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sheet">
+
+<h1>
+<ruby>感謝<rt>かんしゃ</rt></ruby>の
+<ruby>手紙<rt>てがみ</rt></ruby>を
 <ruby>書<rt>か</rt></ruby>こう
 </h1>
 
-<!-- ① 記入 -->
 <!-- ① -->
 <div class="step">
 <h2>
-① <ruby>誰<rt>だれ</rt></ruby>に
+①
+<ruby>誰<rt>だれ</rt></ruby>に
 <ruby>書<rt>か</rt></ruby>きますか
 </h2>
-<h2>① <ruby>誰<rt>だれ</rt></ruby>に<ruby>書<rt>か</rt></ruby>きますか</h2>
-<input type="text" id="to" placeholder="〇〇先生">
+
+<input
+type="text"
+id="to"
+placeholder="〇〇先生">
 </div>
 
-<!-- ② 選択 -->
 <!-- ② -->
 <div class="step">
+
 <h2>
-② <ruby>最初<rt>さいしょ</rt></ruby>のあいさつを
+②
+<ruby>前文<rt>ぜんぶん</rt></ruby>を
 <ruby>選<rt>えら</rt></ruby>びましょう（1つ）
 </h2>
-<h2>② <ruby>前文<rt>ぜんぶん</rt></ruby>を<ruby>選<rt>えら</rt></ruby>びましょう（1つ）</h2>
+
 <div class="radio-group">
+
 <label>
 <input type="radio" name="greeting"
-value="〇〇先生、いつもありがとうございます。">
-〇〇<ruby>先生<rt>せんせい</rt></ruby>、いつもありがとうございます。
-<label><input type="radio" name="greeting"
 value="いつもありがとうございます。">
 いつもありがとうございます。
 </label>
 
 <label>
 <input type="radio" name="greeting"
-value="〇〇先生、日ごろからお世話になっています。">
-〇〇<ruby>先生<rt>せんせい</rt></ruby>、
-<ruby>日<rt>ひ</rt>ごろから</ruby>
-<label><input type="radio" name="greeting"
 value="毎日お世話になっています。">
 <ruby>毎日<rt>まいにち</rt></ruby>
 お<ruby>世話<rt>せわ</rt></ruby>になっています。
@@ -104,63 +128,64 @@ value="毎日お世話になっています。">
 
 <label>
 <input type="radio" name="greeting"
-value="〇〇先生にお礼を伝えたくて、手紙を書きました。">
-〇〇<ruby>先生<rt>せんせい</rt></ruby>に
-<label><input type="radio" name="greeting"
 value="お礼を伝えたくて、手紙を書きました。">
 お<ruby>礼<rt>れい</rt></ruby>を
 <ruby>伝<rt>つた</rt></ruby>えたくて、
 <ruby>手紙<rt>てがみ</rt></ruby>を
-@@ -122,50 +115,37 @@
+<ruby>書<rt>か</rt></ruby>きました。
+</label>
+
 </div>
 </div>
 
-<!-- ③ 記入 -->
 <!-- ③ -->
 <div class="step">
+
 <h2>
-③ <ruby>思<rt>おも</rt></ruby>い
-<ruby>出<rt>で</rt></ruby><ruby>書<rt>か</rt></ruby>きましょう。<br>
-例）　〇〇のとき、〇〇のときが、
+③
+<ruby>思<rt>おも</rt></ruby>い
+<ruby>出<rt>で</rt></ruby>
 </h2>
-<h2>③ <ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby></h2>
-<textarea id="memory"></textarea>
+
+<textarea
+id="memory"
+placeholder="例：運動会で応援してくれたこと、毎日声をかけてくれたこと など"></textarea>
+
 </div>
 
-<!-- ④ 記入 -->
 <!-- ④ -->
 <div class="step">
+
 <h2>
-④ そのときの<ruby>気持<rt>きも</rt></ruby>ちを<ruby>書<rt>か</rt></ruby>きましょう。<br>
-例）　〇〇でした。〇〇です。
+④
+<ruby>気持<rt>きも</rt></ruby>ち
 </h2>
- 
-<h2>④ <ruby>気持<rt>きも</rt></ruby>ち</h2>
-<textarea id="feeling"></textarea>
+
+<textarea
+id="feeling"
+placeholder="例：うれしかったです。安心しました。楽しかったです。"></textarea>
+
 </div>
 
-<!-- ⑤ 選択 -->
 <!-- ⑤ -->
 <div class="step">
+
 <h2>
-⑤ <ruby>最後<rt>さいご</rt></ruby>のあいさつを
+⑤
+<ruby>結<rt>むす</rt></ruby>びを
 <ruby>選<rt>えら</rt></ruby>びましょう（1つ）
 </h2>
-<h2>⑤ <ruby>結<rt>むす</rt></ruby>びを<ruby>選<rt>えら</rt></ruby>びましょう（1つ）</h2>
+
 <div class="radio-group">
+
 <label>
 <input type="radio" name="closing"
-<label><input type="radio" name="closing"
 value="これからもよろしくお願いします。">
-  これからもよろしくお<ruby>願<rt>ねが</rt></ruby>いします。
 これからもよろしくお願いします。
 </label>
 
 <label>
 <input type="radio" name="closing"
-value="もっと成長できるようにがんばります。">
-もっと<ruby>成長<rt>せいちょう</rt></ruby>できるようにがんばります。
-<label><input type="radio" name="closing"
 value="いつも見守ってくださり、ありがとうございます。">
 いつも
 <ruby>見守<rt>みまも</rt></ruby>ってくださり、
@@ -170,49 +195,93 @@ value="いつも見守ってくださり、ありがとうございます。">
 <label>
 <input type="radio" name="closing"
 value="これからも〇〇先生に会えるのを楽しみにしています。">
-<label><input type="radio" name="closing"
-value="これからも会えるのを楽しみにしています。">
 これからも
 〇〇<ruby>先生<rt>せんせい</rt></ruby>に
 <ruby>会<rt>あ</rt></ruby>えるのを
 <ruby>楽<rt>たの</rt></ruby>しみにしています。
 </label>
-@@ -174,9 +154,7 @@
+
+</div>
+</div>
 
 <!-- まとめ -->
 <div class="step">
+
 <h2>
-<ruby>手紙<rt>てがみ</rt></ruby>のまとめ
+<ruby>手紙<rt>てがみ</rt></ruby>のまとめ（縦書き）
 </h2>
-<h2><ruby>手紙<rt>てがみ</rt></ruby>のまとめ（縦書き）</h2>
+
 <button onclick="build()">まとめる</button>
 <button onclick="makePDF()">PDFにする</button>
+
 <textarea id="result" readonly></textarea>
-@@ -195,20 +173,21 @@
 
-  let text = [];
+</div>
 
-  if(g) text.push(g.value.replaceAll("〇〇先生", to));
-  if(to) text.push(to + "へ");   // ★ 最初に「〇〇先生へ」
+</div>
 
-  if(g) text.push(g.value);
-  if(memory) text.push(memory);
-  if(feeling) text.push(feeling);
-  if(c) text.push(c.value.replaceAll("〇〇先生", to));
-  if(c) text.push(c.value);
+<script>
 
-  document.getElementById("result").value = text.join("\n\n");
+function build(){
+
+  const to=document.getElementById("to").value.trim();
+
+  const g=document.querySelector('input[name="greeting"]:checked');
+  const c=document.querySelector('input[name="closing"]:checked');
+
+  const memory=document.getElementById("memory").value.trim();
+  const feeling=document.getElementById("feeling").value.trim();
+
+  let text=[];
+
+  if(to){
+    text.push(to+"へ");
+  }
+
+  if(g){
+    text.push(g.value.replaceAll("〇〇先生",to));
+  }
+
+  if(memory){
+    text.push(memory);
+  }
+
+  if(feeling){
+    text.push(feeling);
+  }
+
+  if(c){
+    text.push(c.value.replaceAll("〇〇先生",to));
+  }
+
+  document.getElementById("result").value=text.join("\n\n");
 }
 
-/* ★ PDF化ボタン */
 function makePDF(){
-  build();        // 必ず最新にまとめる
-  window.print();// 印刷 → PDF保存
   build();
   window.print();
 }
+
+/* 入力するたびに自動更新 */
+window.addEventListener("load",()=>{
+
+  build();
+
+  document.getElementById("to").addEventListener("input",build);
+  document.getElementById("memory").addEventListener("input",build);
+  document.getElementById("feeling").addEventListener("input",build);
+
+  document.querySelectorAll('input[name="greeting"]').forEach(el=>{
+    el.addEventListener("change",build);
+  });
+
+  document.querySelectorAll('input[name="closing"]').forEach(el=>{
+    el.addEventListener("change",build);
+  });
+
+});
+
 </script>
 
 </body>
-</html>
 </html>
