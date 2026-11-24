@@ -1,286 +1,256 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>感謝の手紙を書こう</title>
-
+<title>年賀状を書こう</title>
 <style>
+*{box-sizing:border-box}
 body{
-  font-family:"UD デジタル 教科書体 N-R","Hiragino Sans","Noto Sans JP",sans-serif;
-  background:#fafafa;
+ font-family:sans-serif;background:#fff8e1;
+ text-align:center;margin:0;padding:15px;color:#333
 }
-
-.sheet{
-  max-width:900px;
-  margin:20px auto;
-  background:#fff;
-  border:1px solid #ccc;
-  border-radius:12px;
-  padding:20px;
+h1{color:#d32f2f;font-size:34px}
+h2{color:#555;margin-top:30px}
+.container{max-width:1000px;margin:auto}
+.teacher-grid{
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:10px;max-width:760px;margin:20px auto
 }
-
-h1{
-  margin-top:0;
+.teacher-card{
+ border:3px solid #ccc;border-radius:12px;
+ padding:6px;background:white;cursor:pointer
 }
-
-.step{
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:15px;
-  margin-bottom:15px;
+.teacher-card.selected{border:4px solid orange;background:#fff3cd}
+.teacher-card img{
+ width:100%;height:90px;object-fit:cover;border-radius:8px
 }
-
-textarea,
-input[type=text]{
-  width:100%;
-  font-size:16px;
-  padding:8px;
-  border-radius:6px;
-  border:1px solid #bbb;
-  box-sizing:border-box;
+.teacher-name{margin-top:5px;font-size:14px;font-weight:bold}
+.question{
+ background:white;max-width:700px;margin:25px auto;
+ padding:20px;border-radius:15px;box-shadow:0 3px 10px #ddd
 }
-
-textarea{
-  min-height:90px;
+.question-title{font-size:21px;font-weight:bold;margin-bottom:15px}
+.radio-list{
+ display:flex;flex-direction:column;align-items:flex-start;
+ gap:12px;max-width:520px;margin:auto
 }
-
-/* まとめ欄（縦書き） */
-#result{
-  min-height:400px;
-  writing-mode:vertical-rl;
-  text-orientation:upright;
-  line-height:2;
-  font-size:20px;
-  letter-spacing:4px;
+.radio-item{
+ width:100%;padding:12px;border:2px solid #ccc;
+ border-radius:10px;background:#fff;text-align:left;
+ font-size:18px;cursor:pointer
 }
-
-.radio-group label{
-  display:inline-block;
-  margin:5px 12px 5px 0;
+.radio-item:hover{background:#fff3e0}
+.radio-item input{width:20px;height:20px;vertical-align:middle;margin-right:10px}
+.text-input,textarea{
+ width:90%;font-size:20px;padding:12px;
+ border:2px solid #aaa;border-radius:8px
 }
-
+textarea{min-height:110px;resize:vertical;font-family:sans-serif}
+.count{color:#777;font-size:14px;margin-top:5px}
+.card{
+ max-width:680px;min-height:550px;margin:40px auto;
+ padding:30px;border:6px solid #d32f2f;border-radius:25px;
+ background:white;box-shadow:0 5px 20px #ccc
+}
+.vertical-message{
+ writing-mode:vertical-rl;text-orientation:mixed;
+ height:470px;max-width:100%;margin:20px auto;
+ text-align:start;line-height:2.2;font-size:23px
+}
+.vertical-message p{margin:0 0 0 25px}
+#teacher{color:#1565c0;font-size:32px;font-weight:bold}
+.highlight{color:#d32f2f;font-weight:bold}
+.preview-message{white-space:pre-wrap}
+ruby{ruby-position:over}
+rt{font-size:0.55em;color:#555}
+.main-button{
+ font-size:20px;padding:12px 25px;margin:8px;
+ border:0;border-radius:12px;background:#d32f2f;
+ color:white;cursor:pointer
+}
+.reset-button{background:#777}
+.error{color:#d32f2f;font-weight:bold;font-size:18px;margin:15px}
+.success{color:#2e7d32;font-weight:bold;font-size:20px;margin:15px}
+@media(max-width:600px){
+ h1{font-size:28px}
+ .teacher-grid{grid-template-columns:repeat(2,1fr)}
+ .teacher-card img{height:85px}
+ .card{padding:15px;min-height:500px}
+ .vertical-message{height:440px;font-size:19px;line-height:2}
+ #teacher{font-size:27px}
+ .text-input,textarea{width:100%}
+}
 @media print{
-  button{
-    display:none;
-  }
-
-  body{
-    background:#fff;
-  }
-
-  .sheet{
-    border:none;
-    margin:0;
-    width:100%;
-  }
+ body{background:white;padding:0}
+ h1,h2,.question,.main-button,#errorMessage,#successMessage{
+  display:none!important
+ }
+ .card{margin:auto;box-shadow:none;border:4px solid #d32f2f;page-break-inside:avoid}
 }
 </style>
 </head>
-
 <body>
+<div class="container">
 
-<div class="sheet">
+<h1>🎍 <ruby>年賀状<rt>ねんがじょう</rt></ruby>を
+<ruby>書<rt>か</rt></ruby>こう 🎍</h1>
 
-<h1>
-<ruby>感謝<rt>かんしゃ</rt></ruby>の
-<ruby>手紙<rt>てがみ</rt></ruby>を
-<ruby>書<rt>か</rt></ruby>こう
-</h1>
+<p><ruby>先生<rt>せんせい</rt></ruby>への
+<ruby>年賀状<rt>ねんがじょう</rt></ruby>を
+<ruby>作<rt>つく</rt></ruby>ってみよう！</p>
 
-<!-- ① -->
-<div class="step">
-<h2>
-①
-<ruby>誰<rt>だれ</rt></ruby>に
-<ruby>書<rt>か</rt></ruby>きますか
-</h2>
+<h2>① <ruby>先生<rt>せんせい</rt></ruby>を
+<ruby>選<rt>えら</rt></ruby>ぼう</h2>
+<div id="teacherGrid" class="teacher-grid"></div>
 
-<input
-type="text"
-id="to"
-placeholder="〇〇先生">
-</div>
-
-<!-- ② -->
-<div class="step">
-
-<h2>
-②
-<ruby>前文<rt>ぜんぶん</rt></ruby>を
-<ruby>選<rt>えら</rt></ruby>びましょう（1つ）
-</h2>
-
-<div class="radio-group">
-
-<label>
-<input type="radio" name="greeting"
-value="いつもありがとうございます。">
-いつもありがとうございます。
-</label>
-
-<label>
-<input type="radio" name="greeting"
-value="毎日お世話になっています。">
-<ruby>毎日<rt>まいにち</rt></ruby>
-お<ruby>世話<rt>せわ</rt></ruby>になっています。
-</label>
-
-<label>
-<input type="radio" name="greeting"
-value="お礼を伝えたくて、手紙を書きました。">
-お<ruby>礼<rt>れい</rt></ruby>を
-<ruby>伝<rt>つた</rt></ruby>えたくて、
-<ruby>手紙<rt>てがみ</rt></ruby>を
-<ruby>書<rt>か</rt></ruby>きました。
-</label>
-
+<div class="question">
+<div class="question-title">② <ruby>去年<rt>きょねん</rt></ruby>のことを
+<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>ぼう</div>
+<p><ruby>一番<rt>いちばん</rt></ruby><ruby>伝<rt>つた</rt></ruby>えたいことを
+<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>んでね。</p>
+<div class="radio-list">
+<label class="radio-item"><input type="radio" name="lastYear" value="ありがとうございました" onchange="update()">ありがとうございました</label>
+<label class="radio-item"><input type="radio" name="lastYear" value="お世話になりました" onchange="update()">お世話になりました</label>
+<label class="radio-item"><input type="radio" name="lastYear" value="楽しかったです" onchange="update()">楽しかったです</label>
+<label class="radio-item"><input type="radio" name="lastYear" value="勉強を教えてくださってありがとうございました" onchange="update()">勉強を教えてくださってありがとうございました</label>
+<label class="radio-item"><input type="radio" name="lastYear" value="優しくしてくださってありがとうございました" onchange="update()">優しくしてくださってありがとうございました</label>
 </div>
 </div>
 
-<!-- ③ -->
-<div class="step">
-
-<h2>
-③
-<ruby>思<rt>おも</rt></ruby>い
-<ruby>出<rt>で</rt></ruby>
-</h2>
-
-<textarea
-id="memory"
-placeholder="例：運動会で応援してくれたこと、毎日声をかけてくれたこと など"></textarea>
-
+<div class="question">
+<div class="question-title">③ <ruby>今年<rt>ことし</rt></ruby>
+<ruby>頑張<rt>がんば</rt></ruby>ることを<ruby>書<rt>か</rt></ruby>こう</div>
+<p><ruby>今年<rt>ことし</rt></ruby>は
+<ruby>何<rt>なに</rt></ruby>を<ruby>頑張<rt>がんば</rt></ruby>りたいですか？</p>
+<input id="thisYear" class="text-input" maxlength="30"
+placeholder="例：漢字の勉強" oninput="update();count('thisYear','yearCount')">
+<div class="count"><span id="yearCount">0</span>/30文字</div>
 </div>
 
-<!-- ④ -->
-<div class="step">
-
-<h2>
-④
-<ruby>気持<rt>きも</rt></ruby>ち
-</h2>
-
-<textarea
-id="feeling"
-placeholder="例：うれしかったです。安心しました。楽しかったです。"></textarea>
-
+<div class="question">
+<div class="question-title">④ <ruby>先生<rt>せんせい</rt></ruby>への
+<ruby>一言<rt>ひとこと</rt></ruby>を<ruby>書<rt>か</rt></ruby>こう</div>
+<p><ruby>先生<rt>せんせい</rt></ruby>に
+<ruby>伝<rt>つた</rt></ruby>えたいことを<ruby>書<rt>か</rt></ruby>いてみよう。</p>
+<textarea id="teacherMessage" maxlength="80"
+placeholder="例：いつも優しく教えてくださってありがとうございます。"
+oninput="update();count('teacherMessage','messageCount')"></textarea>
+<div class="count"><span id="messageCount">0</span>/80文字</div>
 </div>
 
-<!-- ⑤ -->
-<div class="step">
+<div class="question">
+<div class="question-title">⑤ <ruby>自分<rt>じぶん</rt></ruby>の
+<ruby>名前<rt>なまえ</rt></ruby>を<ruby>書<rt>か</rt></ruby>こう</div>
+<input id="myName" class="text-input" maxlength="10"
+placeholder="名前" oninput="update();count('myName','nameCount')">
+<div class="count"><span id="nameCount">0</span>/10文字</div>
+</div>
 
-<h2>
-⑤
-<ruby>結<rt>むす</rt></ruby>びを
-<ruby>選<rt>えら</rt></ruby>びましょう（1つ）
-</h2>
+<h2>⑥ <ruby>年賀状<rt>ねんがじょう</rt></ruby>を
+<ruby>確認<rt>かくにん</rt></ruby>しよう</h2>
 
-<div class="radio-group">
-
-<label>
-<input type="radio" name="closing"
-value="これからもよろしくお願いします。">
-これからもよろしくお願いします。
-</label>
-
-<label>
-<input type="radio" name="closing"
-value="いつも見守ってくださり、ありがとうございます。">
-いつも
-<ruby>見守<rt>みまも</rt></ruby>ってくださり、
-ありがとうございます。
-</label>
-
-<label>
-<input type="radio" name="closing"
-value="これからも〇〇先生に会えるのを楽しみにしています。">
-これからも
-〇〇<ruby>先生<rt>せんせい</rt></ruby>に
-<ruby>会<rt>あ</rt></ruby>えるのを
-<ruby>楽<rt>たの</rt></ruby>しみにしています。
-</label>
-
+<div class="card">
+<div class="vertical-message">
+<p id="teacher">たなか<ruby>先生<rt>せんせい</rt></ruby>へ</p>
+<p><ruby>明<rt>あ</rt></ruby>けまして
+<ruby>おめでとうございます</ruby>。</p>
+<p><ruby>去年<rt>きょねん</rt></ruby>は
+<span id="previewLast" class="highlight">まだ選んでいません</span>。</p>
+<p><ruby>今年<rt>ことし</rt></ruby>は
+<span id="previewYear" class="highlight">まだ入力されていません</span>
+を<ruby>頑張<rt>がんば</rt></ruby>ります。</p>
+<p id="previewMessage" class="preview-message">先生への一言</p>
+<p><ruby>今年<rt>ことし</rt></ruby>も
+よろしくお<ruby>願<rt>ねが</rt></ruby>いいたします。</p>
+<p style="margin-top:30px">
+<span id="previewName">あなた</span>より</p>
 </div>
 </div>
 
-<!-- まとめ -->
-<div class="step">
+<div id="errorMessage" class="error"></div>
+<div id="successMessage"></div>
 
-<h2>
-<ruby>手紙<rt>てがみ</rt></ruby>のまとめ（縦書き）
-</h2>
-
-<button onclick="makePDF()">PDFにする</button>
-
-<textarea id="result" readonly></textarea>
-
-</div>
+<button class="main-button" onclick="checkCard()">🎉 年賀状を完成する</button>
+<button class="main-button" onclick="window.print()">🖨️ 印刷する</button>
+<button class="main-button reset-button" onclick="resetCard()">🔄 最初から</button>
 
 </div>
 
 <script>
+const teachers=[
+"久保","鈴木","石橋","増田","上村","遠藤","柳堀","中原",
+"吾妻","天野","佐藤","間地","高山","山藤","小幡","梅沢"
+];
 
-function build(){
+let selectedTeacher="たなか先生";
 
-  const to=document.getElementById("to").value.trim();
-
-  const g=document.querySelector('input[name="greeting"]:checked');
-  const c=document.querySelector('input[name="closing"]:checked');
-
-  const memory=document.getElementById("memory").value.trim();
-  const feeling=document.getElementById("feeling").value.trim();
-
-  let text=[];
-
-  if(to){
-    text.push(to+"へ");
-  }
-
-  if(g){
-    text.push(g.value.replaceAll("〇〇先生",to));
-  }
-
-  if(memory){
-    text.push(memory);
-  }
-
-  if(feeling){
-    text.push(feeling);
-  }
-
-  if(c){
-    text.push(c.value.replaceAll("〇〇先生",to));
-  }
-
-  document.getElementById("result").value=text.join("\n\n");
-}
-
-function makePDF(){
-  build();
-  window.print();
-}
-
-/* 入力するたびに自動更新 */
-window.addEventListener("load",()=>{
-
-  build();
-
-  document.getElementById("to").addEventListener("input",build);
-  document.getElementById("memory").addEventListener("input",build);
-  document.getElementById("feeling").addEventListener("input",build);
-
-  document.querySelectorAll('input[name="greeting"]').forEach(el=>{
-    el.addEventListener("change",build);
-  });
-
-  document.querySelectorAll('input[name="closing"]').forEach(el=>{
-    el.addEventListener("change",build);
-  });
-
+teachers.forEach((name,i)=>{
+ const card=document.createElement("button");
+ card.type="button";
+ card.className="teacher-card";
+ card.innerHTML=`
+ <img src="images/teacher${String(i+1).padStart(2,"0")}.jpg">
+ <div class="teacher-name">${name}<ruby>先生<rt>せんせい</rt></ruby></div>`;
+ card.onclick=()=>{
+  document.querySelectorAll(".teacher-card").forEach(c=>c.classList.remove("selected"));
+  card.classList.add("selected");
+  selectedTeacher=name+"先生";
+  update();
+ };
+ if(i===0)card.classList.add("selected");
+ teacherGrid.appendChild(card);
 });
 
-</script>
+function update(){
+ document.getElementById("teacher").textContent=selectedTeacher+"へ";
+ const last=document.querySelector('input[name="lastYear"]:checked');
+ previewLast.textContent=last?last.value:"まだ選んでいません";
+ previewYear.textContent=thisYear.value||"まだ入力されていません";
+ previewMessage.textContent=teacherMessage.value||"先生への一言";
+ previewName.textContent=myName.value||"あなた";
+}
 
+function count(id,cid){
+ document.getElementById(cid).textContent=
+ document.getElementById(id).value.length;
+}
+
+function checkCard(){
+ const error=document.getElementById("errorMessage");
+ const success=document.getElementById("successMessage");
+ error.textContent="";
+ success.textContent="";
+
+ if(!document.querySelector('input[name="lastYear"]:checked'))
+  return error.textContent="❌ 去年のことを一つ選んでください。";
+ if(!thisYear.value.trim())
+  return error.textContent="❌ 今年頑張ることを書いてください。";
+ if(!teacherMessage.value.trim())
+  return error.textContent="❌ 先生への一言を書いてください。";
+ if(!myName.value.trim())
+  return error.textContent="❌ 名前を書いてください。";
+
+ success.className="success";
+ success.textContent="🎉 年賀状が完成しました！";
+}
+
+function resetCard(){
+ selectedTeacher="たなか先生";
+ ["myName","thisYear","teacherMessage"].forEach(id=>{
+  document.getElementById(id).value="";
+ });
+ document.querySelectorAll('input[name="lastYear"]').forEach(r=>r.checked=false);
+ document.querySelectorAll(".teacher-card").forEach(c=>c.classList.remove("selected"));
+ document.querySelector(".teacher-card").classList.add("selected");
+ errorMessage.textContent="";
+ successMessage.textContent="";
+ update();
+ count("myName","nameCount");
+ count("thisYear","yearCount");
+ count("teacherMessage","messageCount");
+}
+</script>
 </body>
 </html>
